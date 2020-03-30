@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const { errors } = require('celebrate')
 const routes = require('./routes')
 
 const app = express()
@@ -7,6 +8,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(routes)
+app.use(errors())
 
 /*
 GET: Buscar/listar uma informação do back-end
@@ -27,4 +29,4 @@ NPM - Instalar um pacote
 NPX - Executar um pacote
 */
 
-app.listen(3333)
+module.exports = app

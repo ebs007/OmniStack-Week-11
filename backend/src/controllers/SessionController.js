@@ -2,16 +2,15 @@ const crypto = require('crypto')
 const connection = require('../database/connection')
 
 module.exports = {
-
-    async index(request, response) {
-
-        const incidents = await connection('incidents').select('*')
+    async index (request, response) {
+        const incidents = await connection(
+            'incidents',
+        ).select('*')
 
         return response.json(incidents)
     },
 
-    async create(request, response) {
-
+    async create (request, response) {
         const { id } = request.body
 
         const ong = await connection('ongs')
@@ -21,16 +20,14 @@ module.exports = {
 
         if (!ong) {
             return response.status(400).json({
-                error: 'No ONG found with this ID.'
+                error : 'No ONG found with this ID.',
             })
         }
 
         response.json(ong)
-
     },
 
-    async delete(request, response) {
-
+    async delete (request, response) {
         const { id } = request.params
 
         const ong_id = request.headers.authorization
@@ -42,7 +39,7 @@ module.exports = {
 
         if (incident.ong_id != ong_id) {
             return response.status(401).json({
-                error: 'Operation not permitted'
+                error : 'Operation not permitted',
             })
         }
 
@@ -51,7 +48,5 @@ module.exports = {
             .delete()
 
         return response.status(204).send()
-
-    }
-
+    },
 }
